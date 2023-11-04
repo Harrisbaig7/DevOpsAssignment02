@@ -1,0 +1,32 @@
+pipeline {
+    agent {
+        docker {
+            image 'php'
+            args '-u root'
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: 
+                [[url: 'https://github.com/Harrisbaig7/DevOpsAssignment02']]])
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh 'composer install'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                sh 'vendor/bin/phpunit'
+            }
+        }
+        stage('Build and Deploy') {
+            steps {
+                sh 'php artisan migrate --force'
+                sh 'php artisan optimize'
+            }
+        }
+    }
+}
