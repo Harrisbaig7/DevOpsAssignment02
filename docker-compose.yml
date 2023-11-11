@@ -12,7 +12,7 @@ services:
             - db
         environment:
             DB_HOST: db
-            DB_DATABASE: laravel
+            DB_DATABASE: laravel/laravel
             DB_USERNAME: root
             DB_PASSWORD: secret
 
@@ -21,7 +21,7 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MYSQL_DATABASE: laravel
+            MYSQL_DATABASE: laravel/laravel
             MYSQL_ROOT_PASSWORD: secret
         volumes:
             - db_data:/var/lib/mysql
